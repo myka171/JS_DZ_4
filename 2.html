@@ -52,6 +52,66 @@
   <script>
     "use strict";
 
+    function PostES5(name, text) {
+      this.name = name;
+      this.text = text;
+      this.date = Date();
+    }
+
+    PostES5.prototype.edit = function (text) {
+      if (this.text === text || this.text === '') {
+        console.log(`Вы не внесли изменений`);
+      }
+      this.text = text;
+      this.date = new Date();
+    }
+
+
+    const post1 = new PostES5('Роман', 'Я пишу скрипты на JS');
+    console.log(post1);
+    post1.edit('Я пишу скрипты на JS');
+    console.log(post1);
+    const post2 = new PostES5('Егор', 'Я не пишу скрипты на JS');
+
+    function AttachedPostES5(name, text) {
+      PostES5.call(this, name, text);
+      this.tagging = false;
+    }
+    AttachedPostES5.prototype = Object.create(PostES5.prototype);
+    AttachedPostES5.prototype.constructor = AttachedPostES5;
+
+
+    AttachedPostES5.prototype.makeTextHighlighted = function () {
+      this.tagging = true;
+      this.updatedAt = new Date();
+    };
+
+
+    class PostES6 {
+      constructor(name, text) {
+        this.name = name;
+        this.text = text;
+        this.date = Date();
+      }
+      edit = function (text) {
+        if (this.text === text || this.text === '') {
+          console.log(`Вы не внесли изменений`);
+        }
+        this.text = text;
+        this.date = new Date();
+      }
+    }
+    class AttachedPostES6 extends PostES6 {
+      tagging = false;
+      super(name, text);
+      makeTextHighlighted = function () {
+        this.tagging = true;
+        this.updatedAt = new Date();
+      }
+    }
+
+
+
 
   </script>
 </body>
